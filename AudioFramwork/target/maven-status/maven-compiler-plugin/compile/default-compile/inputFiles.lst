@@ -1,0 +1,6 @@
+D:\JAVA\Netty教程源码资料\JianXuanAudio\AudioFramwork\src\main\java\com\jianxuan\message\AudioMessage.java
+D:\JAVA\Netty教程源码资料\JianXuanAudio\AudioFramwork\src\main\java\com\jianxuan\protocol\Serializer.java
+D:\JAVA\Netty教程源码资料\JianXuanAudio\AudioFramwork\src\main\java\com\jianxuan\config\Config.java
+D:\JAVA\Netty教程源码资料\JianXuanAudio\AudioFramwork\src\main\java\com\jianxuan\protocol\MessageCodecSharable.java
+D:\JAVA\Netty教程源码资料\JianXuanAudio\AudioFramwork\src\main\java\com\jianxuan\protocol\SequenceIdGenerator.java
+D:\JAVA\Netty教程源码资料\JianXuanAudio\AudioFramwork\src\main\java\com\jianxuan\protocol\ProcotolFrameDecoder.java
