@@ -3,7 +3,8 @@
 # 使用
 1. 在Client和Server下的target里有生成好的jar包，可直接使用
 2. 服务端直接启动
-3. 客户端需要先在jar包里的application.properties 中指定服务端的ip地址，不然无法连接
+3. 客户端需要先在jar包里的application.properties 中指定服务端的ip地址，不然无法连接,默认设置的是回环地址
+4.
 ## 命令行启动
 - 使用命令行启动可以看到日志信息，在与jar包同文件夹下，输入以下cmd命令
 ```java
