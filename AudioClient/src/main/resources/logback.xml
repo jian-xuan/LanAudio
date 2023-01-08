@@ -3,36 +3,68 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback
  ">
-    <!-- 输出控制，格式控制-->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+
+    <contextName>logback</contextName>
+
+
+    <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+    <property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+
+    <!-- 定义日志存储的路径，不要配置相对路径 -->
+    <property name="FILE_PATH" value="D:/JAVA/log/spring-log.%d{yyyy-MM-dd}.%i.log" />
+
+    <!-- 控制台输出日志 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 日志级别过滤INFO以下 -->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>ALL</level>-->
+<!--        </filter>-->
         <encoder>
-            <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n</pattern>
+            <!-- 按照上面配置的LOG_PATTERN来打印日志 -->
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
-    <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        &lt;!&ndash; 日志文件名称 &ndash;&gt;
-        <file>logFile.log</file>
+
+    <!--每天生成一个日志文件，保存30天的日志文件。rollingFile用来切分文件的 -->
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志级别过滤INFO以下 -->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>ALL</level>-->
+<!--        </filter>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            &lt;!&ndash; 每天产生一个新的日志文件 &ndash;&gt;
-            <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
-            &lt;!&ndash; 保留 15 天的日志 &ndash;&gt;
+
+            <fileNamePattern>${FILE_PATH}</fileNamePattern>
+
+            <!-- keep 15 days' worth of history -->
             <maxHistory>15</maxHistory>
+
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 日志文件的最大大小 -->
+                <maxFileSize>2MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+
+            <!-- 超出删除老文件 -->
+            <totalSizeCap>10MB</totalSizeCap>
         </rollingPolicy>
+
         <encoder>
-            <pattern>%date{HH:mm:ss} [%-5level] [%thread] %logger{17} - %m%n </pattern>
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
-    </appender>-->
+    </appender>
 
     <!-- 用来控制查看那个类的日志内容（对mybatis name 代表命名空间） -->
-    <logger name="com.jianxuan" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT"/>
+    <logger name="com.jianxuan" level="ALL" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="rollingFile" />
     </logger>
 
-    <logger name="io.netty.handler.logging.LoggingHandler" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
 
-    <root level="ERROR">
-        <appender-ref ref="STDOUT"/>
-    </root>
+
+    <!-- 日志输出级别 -->
+<!--    <root level="ALL">-->
+<!--        <appender-ref ref="console" />-->
+<!--        <appender-ref ref="rollingFile" />-->
+<!--    </root>-->
+
+
 </configuration>
