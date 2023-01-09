@@ -51,7 +51,7 @@ public class ClientTest3 {
             }catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
+        },"systemAudio").start();
         log.debug("启动中");
         //解码器
         MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();

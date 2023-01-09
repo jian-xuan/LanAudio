@@ -27,8 +27,8 @@
     </dependencies>
 
     <build>
+        <finalName>AudioServer3.0</finalName>
         <plugins>
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -39,7 +39,7 @@
                     <archive>
                         <manifest>
                             <!-- 此处指定main方法入口的class -->
-                            <mainClass>com.jianxuan.ServerTest3</mainClass>
+                            <mainClass>com.jianxuan.ServerTest4</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
