@@ -145,6 +145,7 @@ public class ClientTest4 {
     public static ChannelFuture connectAndReconnect(Bootstrap bootstrap) throws InterruptedException {
         while(IpContent.ipAdd == null) {
             log.debug("等待ip信息");
+            Thread.sleep(250);
         }
         ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(IpContent.ipAdd, 8080)).await();
         //不断轮询进行重连

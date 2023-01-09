@@ -25,7 +25,7 @@
     </properties>
 
     <build>
-        <finalName>AudioServer4.0</finalName>
+        <finalName>AudioClient3.0</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
