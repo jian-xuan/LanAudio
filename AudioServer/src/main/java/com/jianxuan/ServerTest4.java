@@ -40,6 +40,7 @@ public class ServerTest4 {
         System.out.println("***********by 剑轩*********************");
         System.out.println("***********版本 V2*********************");
         System.out.println("***** 本端ip地址为："+InetAddress.getLocalHost().getHostAddress()+" ****");
+        log.debug("***** 本端ip地址为："+InetAddress.getLocalHost().getHostAddress()+" ****");
         log.debug("启动中");
         // 广播udp 处理
         udpBroadcast();

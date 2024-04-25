@@ -9,10 +9,10 @@ import io.netty.channel.socket.DatagramPacket;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.nio.charset.Charset;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -39,10 +39,26 @@ public class NormalUDPClientHandler extends ChannelInboundHandlerAdapter {
 						}
 						log.info("广播发送");
 						// 发送本端ip地址
-						ctx.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(InetAddress.getLocalHost().getHostAddress(), Charset.forName("utf-8"))
-								, new InetSocketAddress("255.255.255.255", 10000)));
-                        TimeUnit.MILLISECONDS.sleep(500);
-					} catch (InterruptedException | UnknownHostException e) {
+						// 获取所有网络接口
+						Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+						for (NetworkInterface networkInterface : Collections.list(interfaces)) {
+							// 检查网络接口是否开启并支持广播
+							if (networkInterface.isUp() && networkInterface.supportsMulticast()) {
+								for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+									InetAddress broadcast = interfaceAddress.getBroadcast();
+									if (broadcast == null) {
+										continue;
+									}
+									// 发送数据包到网络接口的广播地址
+									ctx.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(InetAddress.getLocalHost().getHostAddress(), Charset.forName("UTF-8")),
+											new InetSocketAddress(broadcast, 10000)));
+								}
+							}
+						}
+//						ctx.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(InetAddress.getLocalHost().getHostAddress(), Charset.forName("utf-8"))
+//								, new InetSocketAddress("255.255.255.255", 10000)));
+                        TimeUnit.MILLISECONDS.sleep(100);
+					} catch (InterruptedException | UnknownHostException | SocketException e) {
                         e.printStackTrace();
 					}finally {
 						lock.unlock();

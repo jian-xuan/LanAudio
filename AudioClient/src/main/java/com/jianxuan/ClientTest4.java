@@ -20,6 +20,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import java.net.InetSocketAddress;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ClientTest4 {
@@ -126,7 +127,6 @@ public class ClientTest4 {
                       .channel(NioDatagramChannel.class)
                       .option(ChannelOption.SO_BROADCAST, true)
                       .handler(udpHandler);
-
               bootstrap.bind(10000).sync().channel().closeFuture().await();
           } catch (InterruptedException e) {
               e.printStackTrace();
@@ -145,7 +145,7 @@ public class ClientTest4 {
     public static ChannelFuture connectAndReconnect(Bootstrap bootstrap) throws InterruptedException {
         while(IpContent.ipAdd == null) {
             log.debug("等待ip信息");
-            Thread.sleep(250);
+            TimeUnit.MILLISECONDS.sleep(250);
         }
         ChannelFuture channelFuture = bootstrap.connect(new InetSocketAddress(IpContent.ipAdd, 8080)).await();
         //不断轮询进行重连
