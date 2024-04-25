@@ -38,7 +38,7 @@ public class ServerTest4 {
         System.out.println("*********请勿关闭本窗口！！！*************");
         System.out.println("********传递403麦克风声音到405***********");
         System.out.println("***********by 剑轩*********************");
-        System.out.println("***********版本 V2*********************");
+        System.out.println("***********版本 V3*********************");
         System.out.println("***** 本端ip地址为："+InetAddress.getLocalHost().getHostAddress()+" ****");
         log.debug("***** 本端ip地址为："+InetAddress.getLocalHost().getHostAddress()+" ****");
         log.debug("启动中");

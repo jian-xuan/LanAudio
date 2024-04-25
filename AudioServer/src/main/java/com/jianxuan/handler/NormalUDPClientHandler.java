@@ -37,7 +37,7 @@ public class NormalUDPClientHandler extends ChannelInboundHandlerAdapter {
 						if(ConnectContent.isConnect){
 							condition.await();
 						}
-						log.info("广播发送");
+
 						// 发送本端ip地址
 						// 获取所有网络接口
 						Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -50,15 +50,15 @@ public class NormalUDPClientHandler extends ChannelInboundHandlerAdapter {
 										continue;
 									}
 									// 发送数据包到网络接口的广播地址
-									ctx.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(InetAddress.getLocalHost().getHostAddress(), Charset.forName("UTF-8")),
+									log.info("广播发送，当前接口："+broadcast.getHostAddress());
+									ctx.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(interfaceAddress.getAddress().toString().substring(1), Charset.forName("UTF-8")),
 											new InetSocketAddress(broadcast, 10000)));
 								}
 							}
 						}
 //						ctx.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(InetAddress.getLocalHost().getHostAddress(), Charset.forName("utf-8"))
 //								, new InetSocketAddress("255.255.255.255", 10000)));
-                        TimeUnit.MILLISECONDS.sleep(100);
-					} catch (InterruptedException | UnknownHostException | SocketException e) {
+					} catch (InterruptedException | SocketException e) {
                         e.printStackTrace();
 					}finally {
 						lock.unlock();
